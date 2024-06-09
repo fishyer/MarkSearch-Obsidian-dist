@@ -3,7 +3,7 @@ name: Upload Release Asset
 on:
   push:
     branches:
-      - fishyer
+      - main
 
 jobs:
   release:
