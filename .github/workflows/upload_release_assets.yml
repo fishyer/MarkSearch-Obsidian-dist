@@ -34,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.VERSION }}-MarkSearch-Chrome.zip
+          asset_path: ./build/${{ env.VERSION }}-MarkSearch-Chrome.zip
           asset_name: ${{ env.VERSION }}-MarkSearch-Chrome.zip
           asset_content_type: application/zip
       - name: Upload Release Asset 2-obsidian
@@ -43,7 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./${{ env.VERSION }}-MarkSearch-Obsidian.zip
+          asset_path: ./build/${{ env.VERSION }}-MarkSearch-Obsidian.zip
           asset_name: ${{ env.VERSION }}-MarkSearch-Obsidian.zip
           asset_content_type: application/zip
       - name: Upload Release Asset 3-dist/main.js
