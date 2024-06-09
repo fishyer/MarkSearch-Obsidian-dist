@@ -1,0 +1,66 @@
+name: Upload Release Asset
+
+on:
+  push:
+    branches:
+      - fishyer
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read Version Info
+        id: version
+        run: |
+          echo "VERSION=$(grep 'build_version:' build_config.yaml | cut -d '"' -f 2)" >> $GITHUB_ENV
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset 1-chrome
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.VERSION }}-MarkSearch-Chrome.zip
+          asset_name: ${{ env.VERSION }}-MarkSearch-Chrome.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset 2-obsidian
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./${{ env.VERSION }}-MarkSearch-Obsidian.zip
+          asset_name: ${{ env.VERSION }}-MarkSearch-Obsidian.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset 3-dist/main.js
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./main.js
+          asset_name: main.js
+          asset_content_type: application/zip
+      - name: Upload Release Asset 4-dist/manifest.json
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./manifest.json
+          asset_name: manifest.json
+          asset_content_type: application/zip  
