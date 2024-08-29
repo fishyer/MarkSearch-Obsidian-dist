@@ -8,3 +8,6 @@
 
 支持通过Hamibot-Android脚本来自动读取微信公众号历史文章并全文剪藏到Obsidian库
 
+## 更新日志
+
+- 2024-06-14 发布MarkSearch v2.87.0
